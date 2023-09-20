@@ -47,13 +47,11 @@ async function register(){
          return text
 }
 
-async function login(){
+async function search(){
     const user = {
-        email:$('#email').val(),
-        password:$('#password').val(),
-       
-      }
-     let response = await fetch('/api/auth/login',{
+        url:$('#url').val(),
+    }
+     let response = await fetch('/api/site/',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -64,7 +62,7 @@ async function login(){
       if(response.ok){
        
         //document.cookie="user="+text
-        window.location.href ="/index.html"
+        window.location.href ="/blank.html"
         return text
        
       }
