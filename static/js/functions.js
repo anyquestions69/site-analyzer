@@ -86,21 +86,44 @@ async function ping(){
        $('#ping').append(text)
 }
 
-async function getUser(){
-  console.log()
-  let response = await fetch('/api/users/'+window.location.href.split('/')[4],{
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    }
-  })
-  let text = await response.text()
-  if(response.ok){
-    $('#usernameTop').html(text)
+async function startParse(){
+  const user = {
+    url:$('#url').val(),
+}
+ let response = await fetch('/api/site/',{
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+  body: JSON.stringify(user)
+ })
+ let text = await response.text()
+ if(response.ok){
   
-  }else{
-    alert(text)
-    window.location.href ="/login.html"
+  
+ 
+ var socket = io(':3001');
+async function registered(url){
+    
+    socket.emit("url", user.url);
+    $('#load').modal('show');
+    $('#exampleModal').modal('hide');
+   
+}
+
+ socket.on('siteRes',async (data)=>{
+        $('#load').modal('hide');
+        let res = JSON.parse(data)
+        let response = await fetch('/api/site/',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify(user)
+         })
+    } )
+
+
   }
 }
 

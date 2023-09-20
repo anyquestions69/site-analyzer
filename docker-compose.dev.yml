@@ -13,25 +13,20 @@ services:
       - db
     command: npm run start
 
-  client:
-    build:
-      context: ./client
-    expose:
-      - '3000'
-    working_dir: /client
-    command: npm run dev
 
   # Контейнер с базой данных
   db:
-    image: postgres:12-alpine
+    image: mongo:6-jammy
+    ports:
+      - '27017:27017'
     environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+        #MONGO_INITDB_ROOT_USERNAME: admin
+        #MONGO_INITDB_ROOT_PASSWORD: 1234
+        MONGO_INITDB_DATABASE: sites
+        
     volumes:
-      - ./postgres:/var/lib/postgresql/data
-    expose:
-      - '5432'
-    restart: always
+      - ./dbdata:/data/db
+      #- ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   # Контейнер с nginx
   nginx:
@@ -39,7 +34,6 @@ services:
     depends_on:
       - app
       - db
-      - pgadmin
     image: nginx:latest
     ports:
       - '80:80'
@@ -48,41 +42,8 @@ services:
       - ./static:/var/www/static
     restart: always
 
-  # Контейнер с pgadmin
-  pgadmin:
-    container_name: pgadmin
-    depends_on:
-      - db
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: a@mail.cu
-      PGADMIN_DEFAULT_PASSWORD: 0666
-    expose:
-      - '80'
-    restart: always
-
-  rabbitmq:
-    container_name: rabbitmq
-    image:  rabbitmq:3.11-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    networks:
-      - network
   
-  broker:
-    container_name: broker
-    build: broker/
-    working_dir:
-      /usr/src/broker
-    ports:
-      - "3001:3001"
-    depends_on:
-      - rabbitmq
-    command: npm run start
-    restart: always
-    networks:
-      - network
+  
 
 
 networks:
