@@ -23,7 +23,7 @@ services:
         #MONGO_INITDB_ROOT_USERNAME: admin
         #MONGO_INITDB_ROOT_PASSWORD: 1234
         MONGO_INITDB_DATABASE: sites
-        
+    restart: always
     volumes:
       - ./dbdata:/data/db
       #- ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro

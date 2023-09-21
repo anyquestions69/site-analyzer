@@ -10,10 +10,19 @@ const getPagingData = (data, page, limit) => {
   };
 
 class Manager{
+
+    async getAll(req,res){
+        try{
+            let sites = await Site.findAll()
+            return res.send(sites)
+        }catch(e){
+            console.log(e)
+        }
+    }
    
     async siteInfo(req,res){
         try{
-            let site = await Site.create({id:req})
+            let site = await Site.find({id:req.params['id']})
             return res.send(site)
         }catch(e){
             console.log(e)

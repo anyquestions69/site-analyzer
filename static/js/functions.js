@@ -75,7 +75,7 @@ async function search(){
 }
 
 async function ping(){
-    let response = await fetch('/api/users',{
+    let response = await fetch('/api/sites',{
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
@@ -90,7 +90,7 @@ async function startParse(){
   const user = {
     url:$('#url').val(),
 }
- let response = await fetch('/api/site/',{
+ let response = await fetch('/api/sites/add',{
   method: 'POST',
   headers: {
     'Content-Type': 'application/json;charset=utf-8'
@@ -103,13 +103,13 @@ async function startParse(){
   
  
  var socket = io(':3001');
-async function registered(url){
+
     
-    socket.emit("url", user.url);
+    socket.emit("url", {url:user.url});
     $('#load').modal('show');
     $('#exampleModal').modal('hide');
    
-}
+
 
  socket.on('siteRes',async (data)=>{
         $('#load').modal('hide');

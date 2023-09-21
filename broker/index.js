@@ -29,7 +29,7 @@ amqp.connect('amqp://rabbitmq', function(error0, conn) {
 
 io.on('connection', (socket) => {
     console.log('connected')
-    socket.on('results', async(res)=>{
+    socket.on('url', async(res)=>{
         let qmsg = JSON.stringify(res)
         console.log(qmsg)
         if(channel){
@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
                     consumerTag:ct, 
                     noAck: true
                 });
-                channel.sendToQueue('rpc_queue',
+                channel.sendToQueue('url_queue',
                     Buffer.from(qmsg), {
                         correlationId: correlationId,
                         replyTo: q.queue
@@ -68,46 +68,10 @@ io.on('connection', (socket) => {
 		
     })
 
-    socket.on('user', async(uid)=>{
-        console.log(uid)
-        if(channel){
-            channel.assertQueue('', {
-                exclusive: true,
-                autoDelete:true
-            }, function(error2, q) {
-                if (error2) {
-                    throw error2;
-                }
-                var correlationId = generateUuid();
-                var ct= generateUuid()
-                channel.consume(q.queue, function(msg, err) {
-                    if(err){
-                        console.log(err)
-                    }
-                    if (msg.properties.correlationId === correlationId) {
-                        console.log(' [.] User %s', msg.content.toString());
-                        socket.emit('userRes', msg.content.toString())
-                    }
-                    channel.cancel(ct);
-                }, {
-                    consumerTag:ct, 
-                    noAck: true
-                });
-                channel.sendToQueue('user_queue',
-                    Buffer.from(uid), {
-                        correlationId: correlationId,
-                        replyTo: q.queue
-                    });
-            });
-        }else{
-            socket.emit('response', 'error')
-        }
-    })
-    
-  });
+})
   
-  server.listen(3001, () => {
-    console.log('listening on *:3001');
+  server.listen(3000, () => {
+    console.log('listening on *:3000');
   });
 
 
