@@ -9,6 +9,8 @@ services:
       - .env
     expose:
       - '3000'
+      - '8000'
+    restart: always
     depends_on:
       - db
     command: npm run start
@@ -25,7 +27,7 @@ services:
         MONGO_INITDB_DATABASE: sites
     restart: always
     volumes:
-      - ./dbdata:/data/db
+      - dbdata:/data/db
       #- ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   # Контейнер с nginx
@@ -34,6 +36,7 @@ services:
     depends_on:
       - app
       - db
+      - broker
     image: nginx:latest
     ports:
       - '80:80'
@@ -42,9 +45,36 @@ services:
       - ./static:/var/www/static
     restart: always
 
-  
-  
+  rabbitmq:
+    container_name: rabbitmq
+    image:  rabbitmq:3.11-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      
+  broker:
+    container_name: broker
+    build: broker/
+    working_dir:
+      /usr/src/broker
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+    command: npm run start
+    restart: always
 
+  parser:
+    container_name: parser
+    build: parser/
+    depends_on:
+      - rabbitmq
+    restart: always
+    command: sh -c '/parser/wait-for-it.sh rabbitmq:5672 --timeout=15 -- python3 /parser/consumer.py'
+  
+  
+volumes:
+  dbdata:
 
 networks:
   network: {}

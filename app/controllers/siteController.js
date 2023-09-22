@@ -13,7 +13,7 @@ class Manager{
 
     async getAll(req,res){
         try{
-            let sites = await Site.findAll()
+            let sites = await Site.find({})
             return res.send(sites)
         }catch(e){
             console.log(e)
@@ -31,9 +31,9 @@ class Manager{
     }
 
     async updateInfo(req,res){
-        let {title, description, category, competitors}=req.body
-       
-        return res.send(title)
+        let {title,url, description, category, competitors}=req.body
+       let site = await Site.findOneAndUpdate({url}, {title, description,category, competitors}, {new: true});
+        return res.send(site)
     }
 
    

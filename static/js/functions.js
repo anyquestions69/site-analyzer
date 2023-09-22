@@ -98,19 +98,34 @@ async function startParse(){
   body: JSON.stringify(user)
  })
  let text = await response.text()
+ console.log(text)
  if(response.ok){
-  
-  
- 
- var socket = io(':3001');
+  let socket = new WebSocket("ws://localhost/ws");
 
-    
+socket.onopen = function(e) {
+  alert("[open] Соединение установлено");
+  alert("Отправляем данные на сервер");
+  socket.send(JSON.stringify(user));
+};
+
+socket.onmessage = function(event) {
+  alert(`[message] Данные получены с сервера: ${event.data}`);
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+  } else {
+    // например, сервер убил процесс или сеть недоступна
+    // обычно в этом случае event.code 1006
+    alert('[close] Соединение прервано');
+  }
+};
+/*  var socket = io('/ws'); 
     socket.emit("url", {url:user.url});
     $('#load').modal('show');
     $('#exampleModal').modal('hide');
    
-
-
  socket.on('siteRes',async (data)=>{
         $('#load').modal('hide');
         let res = JSON.parse(data)
@@ -119,13 +134,15 @@ async function startParse(){
           headers: {
             'Content-Type': 'application/json;charset=utf-8'
           },
-          body: JSON.stringify(user)
+          body: JSON.stringify(res)
          })
+         let result = await response.text()
+         console.log(result)
     } )
-
+*/
 
   }
-}
+} 
 
 async function getUsersTable(){
   let response = await fetch('/api/users',{

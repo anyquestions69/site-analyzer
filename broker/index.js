@@ -1,13 +1,6 @@
-const express = require('express');
-const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server,{
-    cors: {
-        origin: "*"
-      }
-});
+var WebSocketServer = require('ws').Server
+, wss = new WebSocketServer({ port: 8080 });
+ 
 var amqp = require('amqplib/callback_api');
 var connection
 var channel
@@ -16,6 +9,7 @@ amqp.connect('amqp://rabbitmq', function(error0, conn) {
     if (error0) {
         throw error0;
     }
+    console.log('connected to rabbitmq')
     connection=conn
     connection.createChannel(function(error1, ch) {
         if (error1) {
@@ -27,10 +21,13 @@ amqp.connect('amqp://rabbitmq', function(error0, conn) {
 });
 
 
-io.on('connection', (socket) => {
+
+wss.on('connection', function connection(ws) 
+{
     console.log('connected')
-    socket.on('url', async(res)=>{
-        let qmsg = JSON.stringify(res)
+   ws.on('url', function incoming(res) 
+   {
+    let qmsg = JSON.stringify(res)
         console.log(qmsg)
         if(channel){
             channel.prefetch(1, false);
@@ -64,15 +61,11 @@ io.on('connection', (socket) => {
         }else{
             socket.emit('err', 'error')
         }
-        
-		
-    })
-
-})
-  
-  server.listen(3000, () => {
-    console.log('listening on *:3000');
-  });
+      console.log('received: %s', message);
+   });
+ 
+   ws.send('something');
+}); 
 
 
 function generateUuid() {
