@@ -1,6 +1,11 @@
-var WebSocketServer = require('ws').Server
-, wss = new WebSocketServer({ port: 8080 });
- 
+var WebSocket = require('ws')
+const http = require('http')
+const express = require('express')
+const app = express()
+
+
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 var amqp = require('amqplib/callback_api');
 var connection
 var channel
@@ -67,7 +72,11 @@ wss.on('connection', function connection(ws)
    ws.send('something');
 }); 
 
-
+server.listen(8000, '0.0.0.0', () => {
+    console.log(
+      `Server running at http://0.0.0.0:8000/`
+    )
+})
 function generateUuid() {
     return Math.random().toString() +
            Math.random().toString() +

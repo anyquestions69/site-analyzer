@@ -4,23 +4,7 @@ jQuery(document).ready(function($) {
   });
 });
 
-async function auth(){
-    let response = await fetch('/api/users/self',{
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    }
-  })
-  let text = await response.text()
-  if(response.ok){
-    $('#usernameTop').html(text)
-  
-  }else{
-    alert(text)
-    window.location.href ="/login.html"
-  }
- 
-}
+
 
 async function register(){
     const user = {
@@ -51,7 +35,7 @@ async function search(){
     const user = {
         url:$('#url').val(),
     }
-     let response = await fetch('/api/site/',{
+     let response = await fetch('http://app:3000/sites/',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -100,7 +84,7 @@ async function startParse(){
  let text = await response.text()
  console.log(text)
  if(response.ok){
-  let socket = new WebSocket("ws://localhost/ws");
+  let socket = new WebSocket("ws://broker:8000");
 
 socket.onopen = function(e) {
   alert("[open] Соединение установлено");
@@ -121,49 +105,9 @@ socket.onclose = function(event) {
     alert('[close] Соединение прервано');
   }
 };
-/*  var socket = io('/ws'); 
-    socket.emit("url", {url:user.url});
-    $('#load').modal('show');
-    $('#exampleModal').modal('hide');
-   
- socket.on('siteRes',async (data)=>{
-        $('#load').modal('hide');
-        let res = JSON.parse(data)
-        let response = await fetch('/api/site/',{
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-          },
-          body: JSON.stringify(res)
-         })
-         let result = await response.text()
-         console.log(result)
-    } )
-*/
+
 
   }
 } 
 
-async function getUsersTable(){
-  let response = await fetch('/api/users',{
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    }
-   })
-   let {users }= await response.json()
 
-   for (let user of users){
-    console.log(user)
-    $('#userTable').append(`<tr>
-    <td>${user.firstname}</td>
-    <td>${user.lastname}</td>
-    <td>${user.email}</td>
-    <td>${user.password}</td>
-    <th>Delete</th>
-
-  </tr>`)
-   }
-  
-  
-}
