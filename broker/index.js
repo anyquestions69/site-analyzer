@@ -30,10 +30,10 @@ amqp.connect('amqp://rabbitmq', function(error0, conn) {
 wss.on('connection', function connection(ws) 
 {
     console.log('connected')
-   ws.on('url', function incoming(res) 
+   ws.on('message', function incoming(res) 
    {
-    let qmsg = JSON.stringify(res)
-        console.log(qmsg)
+        let qmsg = res
+        console.log(Buffer.from(res))
         if(channel){
             channel.prefetch(1, false);
             channel.assertQueue('', {
@@ -49,7 +49,7 @@ wss.on('connection', function connection(ws)
                     
                     if (msg.properties.correlationId === correlationId) {
                         console.log(' [.] По результатам теста %s', msg.content.toString());
-                        socket.emit('response', msg.content.toString())
+                        ws.send( msg.content.toString())
                     }
                     channel.cancel(ct);
                     
@@ -58,7 +58,7 @@ wss.on('connection', function connection(ws)
                     noAck: true
                 });
                 channel.sendToQueue('url_queue',
-                    Buffer.from(qmsg), {
+                    Buffer.from(res), {
                         correlationId: correlationId,
                         replyTo: q.queue
                     });
@@ -66,10 +66,10 @@ wss.on('connection', function connection(ws)
         }else{
             socket.emit('err', 'error')
         }
-      console.log('received: %s', message);
+      console.log('received: %s', res);
    });
  
-   ws.send('something');
+      
 }); 
 
 server.listen(8000, '0.0.0.0', () => {

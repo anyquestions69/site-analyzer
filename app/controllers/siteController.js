@@ -44,7 +44,7 @@ class Manager{
             
                   let site = await Site.create({url})
             const token = jwt.sign({id:site.id, site:site.url}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-            return res.cookie('site',token, { maxAge: 900000, httpOnly: true }).send(token)
+            return res.cookie('site',token, { maxAge: 900000, httpOnly: true }).send(site.id)
         }catch(e){
             console.log(e)
             return res.status(404).send('Ошибка')

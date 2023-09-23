@@ -18,7 +18,7 @@ def on_request(ch, method, props, body):
    
     request = json.loads(body)
     print(request)
-    response= {"url":request.url, "title":"soccer", "description":"description", "category":"sport", "competitors":[{"url":"localhost", "title":"soccer", "description":"description", "category":"sport"}]}
+    response= {"url":request['url'], "title":"soccer", "description":"description", "category":"sport", "competitors":[{"url":"localhost", "title":"soccer", "description":"description", "category":"sport"}]}
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
