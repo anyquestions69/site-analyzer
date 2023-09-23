@@ -59,7 +59,7 @@ async function search(){
 }
 
 async function ping(){
-    let response = await fetch('/api/sites',{
+    let response = await fetch('/api/sites/all',{
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
@@ -84,7 +84,7 @@ async function startParse(){
  let text = await response.text()
  console.log(text)
  if(response.ok){
-  window.location.href ="/blank.html?u="+user.url
+  window.location.href ="/blank.html"
 
 
   }
@@ -92,25 +92,60 @@ async function startParse(){
 
 
 async function receiveResults(){
-  let user = {url:window.location.href.split('u')[1].slice(1)}
-  let socket = new WebSocket("ws://localhost/websocket/");
-  socket.onopen = function(e) {
-    console.log("[open] Соединение установлено");
-    console.log("Отправляем данные на сервер");
-    socket.send(JSON.stringify(user));
-  };
+  let response = await fetch('/api/sites/info',{
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  }
+  })
+  let site = await response.json()
+  if(response.ok){
+    if(!(site.category && site.description && site.title)){
+      
+      let socket = new WebSocket("ws://localhost/websocket/");
+      socket.onopen = function(e) {
+        socket.send(JSON.stringify({url:site.url}));
+      };
 
-  socket.onmessage = function(event) {
-    console.log(`[message] Данные получены с сервера: ${event.data}`);
-  };
+      socket.onmessage = function(event) {
+        
+        let resSite = JSON.parse(event.data)
+        update(resSite)
+        fetch('/api/sites/',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body:event.data
+          })
+         
+      };
 
-  socket.onclose = function(event) {
-    if (event.wasClean) {
-      console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
-    } else {
-      // например, сервер убил процесс или сеть недоступна
-      // обычно в этом случае event.code 1006
-      console.log('[close] Соединение прервано');
+      socket.onclose = function(event) {
+        if (event.wasClean) {
+          console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+        } else {
+          // например, сервер убил процесс или сеть недоступна
+          // обычно в этом случае event.code 1006
+          console.log('[close] Соединение прервано');
+        }
+      };
+    }else{
+      update(site)
     }
-  };
+
+
+  }else{
+    window.location.href ="/login.html"
+  }
+  
+}
+async function update(site){
+  $('#url').html(site.url)
+  $('#category').html(site.category)
+  console.log(site.competitors)
+  for(let s of site.competitors){
+    $('#competitors').empty()
+    $('#competitors').append(`<tr class='clickable-row' data-href='${s.url}'><td>${s.title}</td><td>${s.url}</td><td>${s.description}</td></tr>`)
+  }
 }

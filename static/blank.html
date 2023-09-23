@@ -92,7 +92,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
@@ -221,7 +220,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span id="usernameTop" class="mr-2 d-none d-lg-inline text-gray-600 small">Not authorized</span>
+                                <span id="usernameTop" class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -258,9 +257,9 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 id="sitename" class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Сгенерировать отчет</a>
+                        <h1 id="url" class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <a href="/login.html" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i>Анализировать другой сайт</a>
                     </div>
 
                     <!-- Content Row -->
@@ -274,7 +273,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Тематика сайта</div>
-                                            <div id="theme" class="h5 mb-0 font-weight-bold text-gray-800">Спортивные новости</div>
+                                            <div id="category" class="h5 mb-0 font-weight-bold text-gray-800"> Подождите, Ваш сайт анализируется...</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -290,9 +289,9 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Место в поисковой выдаче (Яндекс)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">352</div>
+                                            <div id="place" class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                               Место в поиске</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> Подождите, Ваш сайт анализируется...</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -312,7 +311,7 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"> Подождите, Ваш сайт анализируется...</div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
@@ -339,7 +338,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Конкурентов</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10192</div>
+                                            <div id="compCount" class="h5 mb-0 font-weight-bold text-gray-800"> Подождите, Ваш сайт анализируется...</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -367,9 +366,9 @@
                                   
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="competitors">
                                     <tr class='clickable-row' data-href='/sites/1'>
-                                        <td>soccer.ru</td> <td>1</td> <td>Футбол, Хоккей</td>
+                                     <td>Подождите, Ваш сайт анализируется...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -385,6 +384,7 @@
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Посетителей</h6>
+                                   
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -403,7 +403,8 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                        Подождите, Ваш сайт анализируется...
+                                       <!--  <canvas id="myAreaChart"></canvas> -->
                                     </div>
                                 </div>
                             </div>
@@ -416,6 +417,7 @@
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Ключевые слова</h6>
+                                    
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -433,7 +435,8 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
+                                    Подождите, Ваш сайт анализируется...
+                                    <!-- <div class="chart-pie pt-4 pb-2">
                                         <canvas id="myPieChart"></canvas>
                                     </div>
                                     <div class="mt-4 text-center small">
@@ -446,7 +449,7 @@
                                         <span class="mr-2">
                                             <i class="fas fa-circle text-info"></i> NBA
                                         </span>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -540,7 +543,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; MLP 2023</span>
                     </div>
                 </div>
             </footer>

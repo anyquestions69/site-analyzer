@@ -22,7 +22,8 @@ class Manager{
    
     async siteInfo(req,res){
         try{
-            let site = await Site.find({id:req.params['id']})
+            let site = req.site
+            console.log(site)
             return res.send(site)
         }catch(e){
             console.log(e)
@@ -43,7 +44,7 @@ class Manager{
             let {url} = req.body
             
                   let site = await Site.create({url})
-            const token = jwt.sign({id:site.id, site:site.url}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
+            const token = jwt.sign({uid:site.id, site:site.url}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
             return res.cookie('site',token, { maxAge: 900000, httpOnly: true }).send(site.id)
         }catch(e){
             console.log(e)
