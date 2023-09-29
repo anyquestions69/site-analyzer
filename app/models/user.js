@@ -2,18 +2,20 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const siteSchema = new Schema({
-  id:Number,
-  url: String, 
+  url: {type:String, unique:true}, 
   title: String, 
   description: String,
-  place:Number,
+  domain:String,
+  pages:[{
+    name:String,
+    category:String
+  }],
   category:String,
+  theme:String,
   keywords:[String],
   competitors: [{
     url: String, 
-    title: String, 
-    description: String,
-    place:Number
+    title: String
   }]
 }, {versionKey: false});
 

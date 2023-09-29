@@ -39,7 +39,7 @@ services:
       - broker
     image: nginx:latest
     ports:
-      - '80:80'
+      - '5000:80'
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./static:/var/www/static
