@@ -1,40 +1,150 @@
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="author" content="colorlib.com">
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
-    <link href="css/main.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="s003">
-      <form>
-        <div class="inner-form">
-          <div class="input-field first-wrap">
-            
-          </div>
-          <div class="input-field second-wrap">
-            <input id="search" type="text" placeholder="Enter Keywords?" />
-          </div>
-          <div class="input-field third-wrap">
-            <button class="btn-search" type="button">
-              <svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <script src="js/extention/choices.js"></script>
-    <script>
-      const choices = new Choices('[data-trigger]',
-      {
-        searchEnabled: false,
-        itemSelectText: '',
-      });
-
-    </script>
-  </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Отслеживание почтовых отправлений по трек-коду" />
+        <meta name="author" content="" />
+        <title>Анализатор сайтов</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+       
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container position-relative">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6">
+                        <div class="text-center text-white">
+                            <!-- Page heading-->
+                            <h2 class="mb-5 display-6">Анализатор сайтов</h2>
+                           
+                            <form class="form-subscribe" id="urlForm" data-sb-form-api-token="API_TOKEN">
+                                <!-- Email address input-->
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="form-control form-control-lg" id="urlInput" type="text" placeholder="Введите URL сайта"  />
+                                    </div>
+                                    <div class="col-auto"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Начать анализ</button></div>
+                                </div> </form><form id="tableForm">
+                                <div class="row my-5"> <p class="mb-5">... или загрузить таблицу доменов</p>
+                                    <div class="col">
+                                        <input class="form-control form-control-lg" id="tableInput" type="file"   />
+                                    </div>
+                                    <div class="col-auto"><button class="btn btn-primary btn-lg" id="submitFile" type="submit">Загрузить</button></div>
+                                </div>
+                            </form>
+                              
+                                <div class="mt-5 d-none" id="submitErrorMessage">
+                                    <h5>Ошибка</h5>
+                                    <p class="font-weight-light mb-0" id="errorMsg">Введите корректный URL</p>
+                                </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Icons Grid-->
+        <section  id="submitSuccessMessage" class="d-none features-icons pt-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mx-auto mb-5 text-center">
+                        <h3>Результаты анализа <span id="stillNot">еще обрабатываются...</span></h3>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-3 mx-auto text-start">
+                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                            <h5 class="">Основная информация</h5><br>
+                            <p class="font-weight-light">Домен: <span id="domain"></span></p>
+                            <p class="font-weight-light">Название сайта: <span id="siteName"></span></p>
+                            <p class="font-weight-light">Тема: <address id="theme"></address></p>
+                            <p class="font-weight-light">Категория: <address id="category"></address></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 mx-auto text-start">
+                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                            
+                            <h5>Страницы</h5><br>
+                            <table class="table table-hover text-bg-white">
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th scope="col">Название</th>
+                                    <th scope="col">URL</th>
+                                </tr>
+                                </thead>
+                                <tbody id="pageTable">
+                                
+                               
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 mx-auto text-start">
+                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                            
+                            <h5>Ключевые слова</h5><br>
+                            <table class="table table-hover text-bg-white">
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th scope="col">Слово</th>
+                                    <th scope="col">Частота</th>
+                                </tr>
+                                </thead>
+                                <tbody id="keyWords">
+                                
+                               
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <section class="bg-white px-5 py-3">
+                            <h5 class="text-center">Конкуренты</h5><br>
+                            <a class="" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Скрыть таблицу конкурентов
+                            </a>
+                            <br>
+                            <div class="collapse show" id="collapseExample">
+                                <div class="">
+                                    <table class="table-hover table text-bg-white mt-4">
+                                        <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th scope="col">Название</th>
+                                            <th scope="col">URL</th>
+                                            <th scope="col">Категория</th>
+                                            <th scope="col">Тема</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="routeTable">
+                                        
+                                       
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        
+    </body>
 </html>

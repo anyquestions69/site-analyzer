@@ -22,9 +22,14 @@ class Manager{
    
     async siteInfo(req,res){
         try{
-            let site = req.site
-            console.log(site)
-            return res.send(site)
+            let {url} = req.body
+            let site = await Site.findOne({url:url})
+            if(site)
+                return res.send(site)
+            
+        
+            site = await Site.create({url})
+            return res.send({url})
         }catch(e){
             console.log(e)
         }

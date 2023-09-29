@@ -8,11 +8,11 @@ const siteSchema = new Schema({
   domain:String,
   pages:[{
     name:String,
-    category:String
+    url:String
   }],
   category:String,
   theme:String,
-  keywords:[String],
+  keywords:[{word:String,frequency:String}],
   competitors: [{
     url: String, 
     title: String
