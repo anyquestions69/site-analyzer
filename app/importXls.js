@@ -25,8 +25,8 @@ module.exports =async function importExcelData2MongoDB(req,res){
   
     // -> Log Excel Data to Console
     console.log(excelData);
-    await Site.insertMany(excelData.Sheet1)
-    res.send(excelData)
+    //await Site.insertMany(excelData.Sheet1)
+    res.send(excelData.Sheet1)
 /* 
     userModel.insertMany(jsonObj,(err,data)=>{  
             if(err){  

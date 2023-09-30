@@ -63,8 +63,8 @@
                             <h5 class="">Основная информация</h5><br>
                             <p class="font-weight-light">Домен: <span id="domain"></span></p>
                             <p class="font-weight-light">Название сайта: <span id="siteName"></span></p>
-                            <p class="font-weight-light">Тема: <address id="theme"></address></p>
-                            <p class="font-weight-light">Категория: <address id="category"></address></p>
+                            <p class="font-weight-light">Тема: <span id="theme"></span></p>
+                            <p class="font-weight-light">Категория: <span id="category"></span></p>
                         </div>
                     </div>
                     <div class="col-lg-3 mx-auto text-start">
@@ -139,7 +139,79 @@
                 </div>
             </div>
         </section>
-       
+        <section  id="submitTableMessage" class="d-none features-icons pt-5 bg-light">
+            <div class="container-1 px-5 " data-id="1">
+                <h3 class="bold"><mark class="siteTitle">1. http://localhsot </mark></h3>
+                <div class="d-flex justify-content-between mb-3 border-bottom">
+                    <div class="col-lg-2  text-start">
+                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                            <h5 class="bold"><b>Основная информация</b></h5><br>
+                            <p class="font-weight-light">Домен: <span data-attr="domain"></span></p>
+                            <p class="font-weight-light">Название: <span data-attr="siteName"></span></p>
+                            <p class="font-weight-light">Тема: <span data-attr="theme"></span></p>
+                            <p class="font-weight-light">Категория: <span data-attr="category"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                            
+                            <h5>Страницы</h5>
+                            <table class="table table-hover text-bg-white">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Название</th>
+                                    <th scope="col">URL</th>
+                                </tr>
+                                </thead>
+                                <tbody id="pageTable">
+                                
+                               
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                            
+                            <h5>Ключевые слова</h5>
+                            <table class="table table-hover text-bg-white">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Слово</th>
+                                    <th scope="col">Частота</th>
+                                </tr>
+                                </thead>
+                                <tbody id="keyWords">
+                                
+                               
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-5  text-center">
+                        <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                            
+                            <h5>Конкуренты</h5>
+                            <table class="table table-hover text-bg-white">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Название</th>
+                                        <th scope="col">URL</th>
+                                        <th scope="col">Категория</th>
+                                        <th scope="col">Тема</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="routeTable">
+                                
+                               
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            
+        </section>
        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

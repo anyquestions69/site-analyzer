@@ -8,5 +8,7 @@ siteRouter.get("/all", siteController.getAll);
 
 siteRouter.post('/', siteController.updateInfo)
 siteRouter.post('/add', siteController.add)
+siteRouter.post('/addmany', siteController.uploadMany)
+siteRouter.get('/:theme', siteController.getByTheme)
  
 module.exports = siteRouter;

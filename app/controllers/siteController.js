@@ -19,7 +19,40 @@ class Manager{
             console.log(e)
         }
     }
-   
+   async getMany(req,res){
+    try{
+        let {sites} = req.body
+        let knownSites=[]
+        let unkonwnSites=[]
+        for(let site of sites){
+            let s = await Site.findOne({url:site.url})
+            if(s){
+                knownSites.push(s)
+            }else{
+                unkonwnSites.push(s)
+            }
+            //site = await Site.create({url})
+        }
+        //await Site.insertMany(unkonwnSites)
+        return res.send({knownSites, unkonwnSites})
+    }catch(e){
+        console.log(e)
+        return res.status(404).send('Ошибка')
+    }
+   }
+   async getByTheme(req,res){
+        try {
+            let {theme} = req.params['theme']
+            let s = await Site.find({theme:theme})
+            return res.send(s)
+        } catch (error) {
+            return res.status(404).send(e)
+        }
+   }
+   async uploadMany(req,res){
+    let result = await Site.insertMany(req.body.unkonwnSites)
+    return res.send(result)
+   }
     async siteInfo(req,res){
         try{
             let {url} = req.body
@@ -32,6 +65,7 @@ class Manager{
             return res.send({url})
         }catch(e){
             console.log(e)
+            return res.status(404).send(e)
         }
         
     }

@@ -29,11 +29,10 @@ amqp.connect('amqp://rabbitmq', function(error0, conn) {
 
 wss.on('connection', function connection(ws) 
 {
-    console.log('connected')
+    console.log('user connected')
    ws.on('message', function incoming(res) 
    {
-        let qmsg = res
-        console.log(Buffer.from(res))
+        console.log(res)
         if(channel){
             channel.prefetch(1, false);
             channel.assertQueue('', {
@@ -48,11 +47,11 @@ wss.on('connection', function connection(ws)
                 channel.consume(q.queue,function(msg,err) {
                     
                     if (msg.properties.correlationId === correlationId) {
-                        console.log(' [.] По результатам теста %s', msg.content.toString());
+                        console.log('Ответ парсера: %s', msg.content.toString());
                         ws.send( msg.content.toString())
                     }
                     channel.cancel(ct);
-                    
+                    ws.close()
                 }, {
                     consumerTag:ct, 
                     noAck: true
@@ -64,7 +63,7 @@ wss.on('connection', function connection(ws)
                     });
             });
         }else{
-            socket.emit('err', 'error')
+            ws.emit('err', 'error')
         }
       console.log('received: %s', res);
    });
