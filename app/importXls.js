@@ -20,13 +20,27 @@ module.exports =async function importExcelData2MongoDB(req,res){
             columnToKey: {
                 A: 'url'
             }
+        },
+        {
+            // Excel Sheet Name
+            name: 'Лист1',
+  
+            // Header Row -> be skipped and will not be present at our result object.
+            header:{
+               rows: 1
+            },
+             
+            // Mapping columns to keys
+            columnToKey: {
+                A: 'url'
+            }
         }]
     });
   
     // -> Log Excel Data to Console
     console.log(excelData);
     //await Site.insertMany(excelData.Sheet1)
-    res.send(excelData.Sheet1)
+    res.send(excelData)
 /* 
     userModel.insertMany(jsonObj,(err,data)=>{  
             if(err){  

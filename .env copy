@@ -1,0 +1,5 @@
+NODE_ENV=dev
+
+MONGODB_URL=mongodb://db:27017/sites
+TOKEN_SECRET=verStrongPassword
+COMPOSE_FILE=docker-compose.${NODE_ENV}.yml

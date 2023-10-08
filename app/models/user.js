@@ -13,10 +13,7 @@ const siteSchema = new Schema({
   category:String,
   theme:String,
   keywords:[{word:String,frequency:String}],
-  competitors: [{
-    url: String, 
-    title: String
-  }]
+  
 }, {versionKey: false});
 
 module.exports = mongoose.model('Site', siteSchema)

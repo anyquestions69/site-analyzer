@@ -1,2 +1,7 @@
 pika
 numpy
+bs4
+lxml
+requests
+tldextract
+fake_useragent
